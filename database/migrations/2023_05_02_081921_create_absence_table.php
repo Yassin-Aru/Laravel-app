@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('absence', function (Blueprint $table) {
             $table->id();
             $table->date('abs_date');
+            $table->unsignedBigInteger('stagiaire_id')->nullable();
+            $table->unsignedBigInteger('seance_id')->nullable();
             $table->foreign('stagiaire_id')
             ->references('id')
             ->on('stagiaire')

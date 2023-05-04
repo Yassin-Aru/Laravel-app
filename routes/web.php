@@ -29,7 +29,22 @@ Route::get('/', function () {
 //     return view('teacher.dashboard');
 // });
 
-Route::get('/dash', [TeacherController::class, 'index'])->name('TeachDash');
+
+
+// Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+//     Route::get('home', 'AdminController@index')->name('adminHome');
+//     Route::get('absence', 'AdminController@absence')->name('adminAbsence');
+// });
+
+Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+    Route::view('home', 'auth.home')->name('adminHome');
+    Route::view('absence', 'auth.absence')->name('adminAbsence');
+});
+
+Route::group(['prefix' => 'teacher', 'as' => 'teacher.'], function () {
+    Route::get('dash', [TeacherController::class, 'index'])->name('TeachDash');
+});
+
 
 Auth::routes();
 

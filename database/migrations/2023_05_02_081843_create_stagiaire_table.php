@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('niveau');
             $table->string('telephone');
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')
             ->references('id')
             ->on('status')
