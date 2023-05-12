@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seance', function (Blueprint $table) {
+        Schema::create('seances', function (Blueprint $table) {
             $table->id();
             $table->string('seance_hour');
             $table->date('seance_date');
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->foreign('group_id')
+            ->references('id')
+            ->on('groups')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seance');
+        Schema::dropIfExists('seances');
     }
 };

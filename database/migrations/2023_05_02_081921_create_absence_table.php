@@ -11,19 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('absence', function (Blueprint $table) {
+        Schema::create('absences', function (Blueprint $table) {
             $table->id();
             $table->date('abs_date');
             $table->unsignedBigInteger('stagiaire_id')->nullable();
             $table->unsignedBigInteger('seance_id')->nullable();
+            $table->unsignedBigInteger('excuse_id')->nullable();
             $table->foreign('stagiaire_id')
             ->references('id')
-            ->on('stagiaire')
+            ->on('stagiaires')
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->foreign('seance_id')
             ->references('id')
-            ->on('seance')
+            ->on('seances')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreign('excuse_id')
+            ->references('id')
+            ->on('excuses')
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->timestamps();
@@ -35,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absence');
+        Schema::dropIfExists('absences');
     }
 };

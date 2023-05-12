@@ -9,6 +9,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        @yield('style')
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -27,7 +30,7 @@
                         </li>
                         <li>
                             <a href="@yield('absenceUrl')" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Absence</span></a>
+                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span></a>
                         </li>
                         <li @yield('stagiaireItem')>
                             <a href="" class="nav-link px-0 align-middle">

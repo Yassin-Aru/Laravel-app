@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Stagiaire;
+use App\Models\Group;
+use App\Models\Absence;
+use App\Models\Seance;
+use Carbon\Carbon;
+
 
 class TeacherController extends Controller
 {
@@ -12,7 +18,11 @@ class TeacherController extends Controller
     public function index()
     {
         //
-        return view('teacher.dashboard');
+        $data =[
+            'stagiaires' => Stagiaire::get(),
+            'groups' => Group::get(),
+        ];
+        return view('teacher.dashboard', $data);
     }
 
     /**
@@ -62,4 +72,38 @@ class TeacherController extends Controller
     {
         //
     }
+    /**
+ * Update the absence values for the specified resource in storage.
+ */
+    public function updateAbsence(Request $request)
+    {
+        // Get the absence data from the request
+        $absenceData = $request->input('absence');
+        
+        // Loop through the absence data and create Absence records
+        foreach ($absenceData as $stagiaireId => $absenceValues) {
+            foreach ($absenceValues as $seanceId) {
+                // Find the seance with the given ID
+                $seance = Seance::find($seanceId);
+
+                // If the seance doesn't exist, return an error
+                if (!$seance) {
+                    return redirect()->back()->with('error', 'Seance not found');
+                }
+
+                // Create the Absence record
+                $absence = new Absence;
+                $absence->abs_date = date('Y-m-d');
+                $absence->stagiaire_id = $stagiaireId;
+                $absence->seance_id = $seance->id;
+                $absence->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Absences have been saved successfully.');
+    }
+
+
+
+
 }
